@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  apache:
+    build: ./apache
+#    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ./apache:/etc/apache2/sites-enabled/
+    links:
+      - nginx_blue
+      - nginx_green
+    networks:
+      - default
+  nginx_blue:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx_blue:/usr/share/nginx/html/
+    networks:
+      - default
+  nginx_green:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx_green:/usr/share/nginx/html/
+    networks:
+      - default
